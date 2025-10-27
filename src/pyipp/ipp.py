@@ -10,6 +10,7 @@ from struct import error as structerror
 from typing import TYPE_CHECKING, Any
 
 import aiohttp
+from aiohttp import BasicAuth
 from deepmerge import always_merger
 from yarl import URL
 
@@ -57,6 +58,8 @@ class IPP:
     verify_ssl: bool = False
     user_agent: str | None = None
     ipp_version: tuple[int, int] = DEFAULT_PROTO_VERSION
+    proxy: str | None = None
+    proxy_auth: BasicAuth | None = None
 
     _close_session: bool = False
     _printer_uri: str = ""
@@ -126,6 +129,8 @@ class IPP:
                     params=params,
                     headers=headers,
                     ssl=self.verify_ssl,
+                    proxy=self.proxy,
+                    proxy_auth=self.proxy_auth,
                 )
         except asyncio.TimeoutError as exc:
             raise IPPConnectionError(
