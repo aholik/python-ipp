@@ -79,6 +79,20 @@ class IPP:
 
             self.tls = printer_uri.scheme == "ipps"  # pylint: disable=W0143
             self.base_path = printer_uri.path
+
+        elif self.host.startswith(("http://", "https://")):
+            self._printer_uri = self.host
+            printer_uri = URL(self.host)
+
+            if printer_uri.host is not None:
+                self.host = printer_uri.host
+
+            if printer_uri.port is not None:
+                self.port = printer_uri.port
+
+            self.tls = printer_uri.scheme == "https"  # pylint: disable=W0143
+            self.base_path = printer_uri.path
+
         else:
             self._printer_uri = self._build_printer_uri()
 
