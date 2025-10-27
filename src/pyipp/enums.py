@@ -271,31 +271,112 @@ class IppPrinterState(IntEnum):
 
 
 class IppFinishing(IntEnum):
-    """Represent the ENUMs of the finishings attribute."""
+    """
+    Represent the ENUMs of the finishings attribute.
 
-    NONE = 0x0003
-    STAPLE = 0x0004
-    PUNCH = 0x0005
-    COVER = 0x0006
-    BIND = 0x0007
-    SADDLE_STITCH = 0x0008
-    EDGE_STITCH = 0x0009
-    STAPLE_TOP_LEFT = 0x0014
-    STAPLE_BOTTOM_LEFT = 0x0015
-    STAPLE_TOP_RIGHT = 0x0016
-    STAPLE_BOTTOM_RIGHT = 0x0017
-    EDGE_STITCH_LEFT = 0x0018
-    EDGE_STITCH_TOP = 0x0019
-    EDGE_STITCH_RIGHT = 0x001A
-    EDGE_STITCH_BOTTOM = 0x001B
-    STAPLE_DUAL_LEFT = 0x001C
-    STAPLE_DUAL_TOP = 0x001D
-    STAPLE_DUAL_RIGHT = 0x001E
-    STAPLE_DUAL_BOTTOM = 0x001F
-    TRIM_AFTER_PAGES = 0x003C
-    TRIM_AFTER_DOCUMENTS = 0x003D
-    TRIM_AFTER_COPIES = 0x003E
-    TRIM_AFTER_JOB = 0x003F
+    Includes all registered IPP finishings values from:
+    - RFC 2911 / RFC 8011 (STD 92)
+    - PWG 5100.1-2001
+    - PWG 5100.1-2014
+    - PWG 5100.1-2017
+    - PWG 5100.1-2020 (IPP Finishings 3.0)
+    """
+
+    # ===== STD 92 (RFC 2911/8011) Values =====
+    NONE = 0x0003  # 3
+    STAPLE = 0x0004  # 4
+    PUNCH = 0x0005  # 5
+    COVER = 0x0006  # 6
+    BIND = 0x0007  # 7
+    SADDLE_STITCH = 0x0008  # 8
+    EDGE_STITCH = 0x0009  # 9
+
+    # ===== PWG 5100.1-2001 Values =====
+    FOLD = 0x000A  # 10
+    TRIM = 0x000B  # 11
+    BALE = 0x000C  # 12
+    BOOKLET_MAKER = 0x000D  # 13
+    JOG_OFFSET = 0x000E  # 14 (DEPRECATED)
+    COAT = 0x000F  # 15
+    LAMINATE = 0x0010  # 16
+
+    # ===== STD 92 Positional Values =====
+    STAPLE_TOP_LEFT = 0x0014  # 20
+    STAPLE_BOTTOM_LEFT = 0x0015  # 21
+    STAPLE_TOP_RIGHT = 0x0016  # 22
+    STAPLE_BOTTOM_RIGHT = 0x0017  # 23
+    EDGE_STITCH_LEFT = 0x0018  # 24
+    EDGE_STITCH_TOP = 0x0019  # 25
+    EDGE_STITCH_RIGHT = 0x001A  # 26
+    EDGE_STITCH_BOTTOM = 0x001B  # 27
+    STAPLE_DUAL_LEFT = 0x001C  # 28
+    STAPLE_DUAL_TOP = 0x001D  # 29
+    STAPLE_DUAL_RIGHT = 0x001E  # 30
+    STAPLE_DUAL_BOTTOM = 0x001F  # 31
+
+    # ===== PWG 5100.1-2014 Triple Staple Values =====
+    STAPLE_TRIPLE_LEFT = 0x0020  # 32
+    STAPLE_TRIPLE_TOP = 0x0021  # 33
+    STAPLE_TRIPLE_RIGHT = 0x0022  # 34
+    STAPLE_TRIPLE_BOTTOM = 0x0023  # 35
+
+    # ===== PWG 5100.1-2001 Bind Positional Values =====
+    BIND_LEFT = 0x0032  # 50
+    BIND_TOP = 0x0033  # 51
+    BIND_RIGHT = 0x0034  # 52
+    BIND_BOTTOM = 0x0035  # 53
+
+    # ===== PWG 5100.1-2020 Trim Values =====
+    TRIM_AFTER_PAGES = 0x003C  # 60
+    TRIM_AFTER_DOCUMENTS = 0x003D  # 61
+    TRIM_AFTER_COPIES = 0x003E  # 62
+    TRIM_AFTER_JOB = 0x003F  # 63
+
+    # ===== PWG 5100.1-2014 Punch Single Values =====
+    PUNCH_TOP_LEFT = 0x0046  # 70
+    PUNCH_BOTTOM_LEFT = 0x0047  # 71
+    PUNCH_TOP_RIGHT = 0x0048  # 72
+    PUNCH_BOTTOM_RIGHT = 0x0049  # 73
+
+    # ===== PWG 5100.1-2014 Punch Dual Values =====
+    PUNCH_DUAL_LEFT = 0x004A  # 74
+    PUNCH_DUAL_TOP = 0x004B  # 75
+    PUNCH_DUAL_RIGHT = 0x004C  # 76
+    PUNCH_DUAL_BOTTOM = 0x004D  # 77
+
+    # ===== PWG 5100.1-2014 Punch Triple Values =====
+    PUNCH_TRIPLE_LEFT = 0x004E  # 78
+    PUNCH_TRIPLE_TOP = 0x004F  # 79
+    PUNCH_TRIPLE_RIGHT = 0x0050  # 80
+    PUNCH_TRIPLE_BOTTOM = 0x0051  # 81
+
+    # ===== PWG 5100.1-2014 Punch Quad Values =====
+    PUNCH_QUAD_LEFT = 0x0052  # 82
+    PUNCH_QUAD_TOP = 0x0053  # 83
+    PUNCH_QUAD_RIGHT = 0x0054  # 84
+    PUNCH_QUAD_BOTTOM = 0x0055  # 85
+
+    # ===== PWG 5100.1-2017 Punch Multiple Values =====
+    PUNCH_MULTIPLE_LEFT = 0x0056  # 86
+    PUNCH_MULTIPLE_TOP = 0x0057  # 87
+    PUNCH_MULTIPLE_RIGHT = 0x0058  # 88
+    PUNCH_MULTIPLE_BOTTOM = 0x0059  # 89
+
+    # ===== PWG 5100.1-2014 Fold Values =====
+    FOLD_ACCORDION = 0x005A  # 90
+    FOLD_DOUBLE_GATE = 0x005B  # 91
+    FOLD_GATE = 0x005C  # 92
+    FOLD_HALF = 0x005D  # 93
+    FOLD_HALF_Z = 0x005E  # 94
+    FOLD_LEFT_GATE = 0x005F  # 95
+    FOLD_LETTER = 0x0060  # 96
+    FOLD_PARALLEL = 0x0061  # 97
+    FOLD_POSTER = 0x0062  # 98
+    FOLD_RIGHT_GATE = 0x0063  # 99
+    FOLD_Z = 0x0064  # 100
+
+    # ===== PWG 5100.1-2017 Engineering Z Fold =====
+    FOLD_ENGINEERING_Z = 0x0065  # 101
 
 
 class IppPrintQuality(IntEnum):
@@ -313,6 +394,7 @@ class IppOrientationRequested(IntEnum):
     LANDSCAPE = 0x0004
     REVERSE_LANDSCAPE = 0x0005
     REVERSE_PORTRAIT = 0x0006
+    VND_UNKNOWN = 0x0007
 
 
 ATTRIBUTE_ENUM_MAP = {
